@@ -1,18 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv"
 
-const connectDb = async () => {
-    try {
-        mongoose.set("strictQuery", false)
-        await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        }).then(() => {
-            console.log("MongoDB Connected Successfully");
-        })
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-}
+dotenv.config()
+const connection = mongoose.createConnection(process.env.MONGODB_URI).on('open', () => { console.log("MongoDB Connected"); }).on('error', () => {
+    console.log("MongoDB Connection error");
+});
 
-export { connectDb }
+export default connection

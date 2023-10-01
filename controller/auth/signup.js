@@ -1,18 +1,22 @@
-import isEmail from "validator/lib/isemail"
-import bcrypt from "bcrypt"
+import UserServices from "../../service/user.service.js"
+const signup = async (req, res, next) => {
+    try {
+        const { email, password } = req.body
+        const duplicate = await UserServices.getUserByEmail(email)
 
-const signup = async (req, res) => {
-    const { email, password, firstName, lastName } = req.body
+        if (duplicate) {
+            console.log("User already exits")
+            throw new Error(`Invalid Data`)
+        }
 
-    if (!email || !isEmail(email) || !password) {
-        return res.status(400).json({
-            success: false,
-            message: 'Invalid Credentials'
-        })
+        const response = await UserServices.registerUser(email, password)
+
+        console.log("User registered successfully")
+        res.status(200).json({ status: true, success: "User registered successfully" })
+
+    } catch (error) {
+        console.log(error)
+        next(error)
     }
-
-    const saltedPassword = await bcrypt.genSalt(10)
-    const hashPassword = await bcrypt.hash(password, saltedPassword);
-
 }
 export default signup
