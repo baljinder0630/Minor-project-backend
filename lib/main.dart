@@ -24,8 +24,10 @@ void main() async {
   InitializationSettings initializationSettings =
       InitializationSettings(android: androidSettings, iOS: iosSettings);
 
-  bool? initialized =
-      await notificationsPlugin.initialize(initializationSettings);
+  bool? initialized = await notificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (details) =>
+          {log(details.payload.toString())});
 
   log("Notification initialized $initialized");
 

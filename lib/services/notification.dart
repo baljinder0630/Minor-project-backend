@@ -30,11 +30,27 @@ class Notifications {
           tz.TZDateTime.from(scheduleDate, tz.local),
           notificationDetails,
           uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.wallClockTime);
+              UILocalNotificationDateInterpretation.wallClockTime,
+          payload: "Tut 10 clicked");
 
       log("Notification send");
     } catch (e) {
       print(e);
+    }
+  }
+
+// function used to see the notification payload(data) when app is closed
+  static void checkForNotificationClicked() async {
+    NotificationAppLaunchDetails? details =
+        await notificationsPlugin.getNotificationAppLaunchDetails();
+    if (details != null) {
+      if (details.didNotificationLaunchApp) {
+        NotificationResponse? response = details.notificationResponse;
+        if (response != null) {
+          String? payload = response.payload;
+          log("Notification payload: $payload");
+        }
+      }
     }
   }
 }

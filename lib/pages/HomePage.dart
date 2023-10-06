@@ -12,6 +12,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Notifications.checkForNotificationClicked();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
