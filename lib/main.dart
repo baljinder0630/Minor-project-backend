@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:minor_project/Screens/NotificationPage.dart';
-import 'package:minor_project/Screens/ToDo/ui/todo_screen.dart';
-import 'package:minor_project/Screens/Welcome/welcome_screen.dart';
+import 'package:minor_project/Pages/NotificationPage.dart';
+import 'package:minor_project/Pages/todo_screen.dart';
+import 'package:minor_project/Pages/welcome_screen.dart';
 import 'package:minor_project/constants.dart';
 import 'package:timezone/data/latest_10y.dart';
 

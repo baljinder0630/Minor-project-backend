@@ -3,9 +3,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:minor_project/Screens/ToDo/model/todo_item.dart';
-import 'package:minor_project/Screens/ToDo/util/database_client.dart';
-import 'package:minor_project/Screens/ToDo/util/date_formatter.dart';
+import 'package:minor_project/model/todo_item.dart';
+import 'package:minor_project/services/Database/database_client.dart';
+import 'package:minor_project/services/Database/date_formatter.dart';
 
 class ToDoScreen extends StatefulWidget {
   @override

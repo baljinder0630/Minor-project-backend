@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:minor_project/Screens/ToDo/model/todo_item.dart';
+import 'package:minor_project/model/todo_item.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
