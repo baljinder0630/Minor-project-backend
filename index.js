@@ -7,14 +7,8 @@ dotenv.config()
 const app = express()
 
 app.use(express.json())
-// connectDb()
 
 app.use('/api', api)
-
-
-app.get("/", (req, res) => {
-    res.send("Alzheimer Assistant Backend")
-})
 
 const port = process.env.PORT
 app.listen(port, () => {
