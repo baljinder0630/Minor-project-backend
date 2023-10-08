@@ -12,3 +12,4 @@ com.example.minor_project.app-mergeDebugResources-10 D:\NITJ\Flutter\minor_proje
 com.example.minor_project.app-mergeDebugResources-11 D:\NITJ\Flutter\minor_project\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
 com.example.minor_project.app-merged_res-12 D:\NITJ\Flutter\minor_project\build\app\intermediates\merged_res\debug
 com.example.minor_project.app-packaged_res-13 D:\NITJ\Flutter\minor_project\build\flutter_local_notifications\intermediates\packaged_res\debug
+com.example.minor_project.app-packaged_res-14 D:\NITJ\Flutter\minor_project\build\permission_handler_android\intermediates\packaged_res\debug
