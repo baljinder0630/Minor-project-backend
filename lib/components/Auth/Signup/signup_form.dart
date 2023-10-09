@@ -68,14 +68,14 @@ class _SignUpFormState extends State<SignUpForm> {
                     },
                     child: Icon(
                         passToggle ? Icons.visibility : Icons.visibility_off),
-                  )
-                ),
+                  )),
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Password can't be empty";
-                } else if (passController.text.length < 8) {
+                } else if (value.length < 8) {
                   return "Password must contain at least 8 characters";
                 }
+                return null;
               },
             ),
           ),
