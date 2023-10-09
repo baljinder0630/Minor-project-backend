@@ -15,17 +15,19 @@ class WelcomeImage extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "WELCOME TO EDU",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          "Welcome to AlzHelpHub",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         SizedBox(height: defaultPadding * 2),
         Row(
           children: [
             Spacer(),
+
+            
             Expanded(
               flex: 8,
-              child: SvgPicture.asset(
-                "assets/icons/chat.svg",
+              child: Image.asset(
+                "assets/images/telemedicine.png",
               ),
             ),
             Spacer(),
