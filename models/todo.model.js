@@ -1,11 +1,11 @@
 import { Schema } from "mongoose";
-import userModel from "./user.model.js";
 import db from "../config/db.js"
+import patientModel from "./patient.model.js";
 
 const todoSchema = new Schema({
-    userId: {
+    patientId: {
         type: Schema.Types.ObjectId,
-        ref: userModel.modelName
+        ref: patientModel.modelName
     },
     title: {
         type: String,
@@ -14,8 +14,12 @@ const todoSchema = new Schema({
     description: {
         type: String,
         required: true
+    },
+    createdOn: {
+        type: Date,
+        default: Date.now()
     }
-}, { timestamps: true })
+})
 
 const todoModel = db.model("todo", todoSchema)
 export default todoModel
