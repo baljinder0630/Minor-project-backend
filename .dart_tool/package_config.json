@@ -104,6 +104,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "http",
+      "rootUri": "file:///C:/Users/Sameer%20Verma/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///C:/Users/Sameer%20Verma/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///C:/Users/Sameer%20Verma/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
@@ -296,6 +308,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "typed_data",
+      "rootUri": "file:///C:/Users/Sameer%20Verma/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///C:/Users/Sameer%20Verma/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics-1.1.7",
       "packageUri": "lib/",
@@ -350,7 +368,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-09T14:46:25.173134Z",
+  "generated": "2023-10-12T04:33:01.964007Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

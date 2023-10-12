@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
@@ -15,42 +18,86 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formkey = GlobalKey<FormState>();
   bool passToggle = true;
   final emailController = TextEditingController();
+  final firstnameController = TextEditingController();
+
   final passController = TextEditingController();
+  final phoneController = TextEditingController();
+
+  var url = Uri.https('https://assistalzheimer.onrender.com', '/api/signup');
+
+  Future<bool> signup() async {
+    var response = await http.post(url, body: {
+      'email': emailController.text.trim(),
+      "password": passController.text.trim(),
+      "firstName": firstnameController.text.trim(),
+      "lastName": "AA",
+      "phoneNumber": phoneController.text.trim()
+    }).then((value) {
+      print(value.body);
+      // if(value.body =)
+    });
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formkey,
-      child: Column(
-        children: [
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            controller: emailController,
-            cursorColor: kPrimaryColor,
-            onSaved: (email) {},
-            decoration: InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextFormField(
+              textInputAction: TextInputAction.next,
+              controller: firstnameController,
+              cursorColor: kPrimaryColor,
+              onSaved: (firstname) {},
+              decoration: InputDecoration(
+                hintText: "Name",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.person),
+                ),
               ),
+              validator: (value) {
+                if (value == null) {
+                  return "Email can't be empty";
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              bool validEmail = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                  .hasMatch(value!);
-              if (value.isEmpty) {
-                return "Email can't be empty";
-              } else if (!validEmail) {
-                return "Enter valid email";
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              controller: emailController,
+              cursorColor: kPrimaryColor,
+              onSaved: (email) {},
+              decoration: InputDecoration(
+                hintText: "Your email",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.email),
+                ),
+              ),
+              validator: (value) {
+                bool validEmail = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(value!);
+                if (value.isEmpty) {
+                  return "Email can't be empty";
+                } else if (!validEmail) {
+                  return "Enter valid email";
+                }
+                return null;
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
               textInputAction: TextInputAction.done,
               obscureText: passToggle,
               cursorColor: kPrimaryColor,
@@ -78,33 +125,43 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-          ),
-          const SizedBox(height: defaultPadding / 2),
-          ElevatedButton(
-            onPressed: () {
-              if (_formkey.currentState!.validate()) {
-                print("Successfully registered");
-                emailController.clear();
-                passController.clear();
-              }
-            },
-            child: Text("Sign Up".toUpperCase()),
-          ),
-          const SizedBox(height: defaultPadding),
-          AlreadyHaveAnAccountCheck(
-            login: false,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              controller: phoneController,
+              cursorColor: kPrimaryColor,
+              onSaved: (firstname) {},
+              decoration: InputDecoration(
+                hintText: "Phonenumber",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.phone),
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+              validator: (value) {
+                if (value!.length != 10) {
+                  return "Invalid Phone number";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: defaultPadding / 2),
+            ElevatedButton(
+              onPressed: () {
+                if (_formkey.currentState!.validate()) {
+                  signup();
+
+                  emailController.clear();
+                  passController.clear();
+                }
+              },
+              child: Text("Sign Up".toUpperCase()),
+            ),
+          ],
+        ),
       ),
     );
   }
