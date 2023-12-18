@@ -6,13 +6,14 @@ import db from "./config/db.js"
 dotenv.config()
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send("Hello World")
-})
 
 app.use(express.json())
 
 app.use('/api', api)
+
+app.get('/', (req, res) => {
+    res.send("Hello World")
+})
 
 const port = process.env.PORT
 app.listen(port, () => {

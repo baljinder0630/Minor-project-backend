@@ -21,8 +21,13 @@ const patientSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
-    }
+    },
+    latitude: {
+        type: String,
+    },
+    longitude: {
+        type: String,
+    },
 }, { timestamps: true });
 
 
