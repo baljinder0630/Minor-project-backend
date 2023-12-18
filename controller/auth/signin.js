@@ -7,12 +7,13 @@ const signin = async (req, res, next) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            throw new Error('Parameter are not correct');
+            return res.json({ "success": false, "message": "Invalid Fields" })
+
         }
 
         if (role === 'patient') {
 
-            let patient = patientModel.findOne({ email })
+            let patient =await  patientModel.findOne({ email })
             if (!patient) {
                 return res.json({ "success": false, "message": "Patient not exist" })
             }
@@ -25,7 +26,7 @@ const signin = async (req, res, next) => {
         }
         else if (role === 'careTaker') {
 
-            let careTaker = careTakerModel.findOne({ email })
+            let careTaker =await  careTakerModel.findOne({ email })
             if (!careTaker) {
                 return res.json({ "success": false, "message": "CareTaker not exist" })
             }
