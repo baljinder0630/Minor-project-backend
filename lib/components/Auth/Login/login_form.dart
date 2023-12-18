@@ -1,3 +1,8 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:minor_project/Pages/nav.dart';
 import 'package:minor_project/services/Todo/notification.dart';
@@ -17,8 +22,38 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _formkey = GlobalKey<FormState>();
   bool passToggle = true;
+  bool isPatient = false;
+  String role = "careTaker";
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
+  Future<bool> signin() async {
+    var url = Uri.https(
+        'assistalzheimer.onrender.com', '/api/auth/signin', {'role': role});
+
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'email': emailController.text.trim(),
+        'password': passController.text.trim(),
+      }),
+    );
+
+    print(response.body);
+    final data = jsonDecode(response.body);
+    if (data["success"] == true) {
+      // Successful response, you may want to parse response.body for further information
+      return true;
+    } else {
+      // Unsuccessful response, handle accordingly
+      final snackBar = SnackBar(content: Text(data["message"]));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +92,7 @@ class _LoginFormState extends State<LoginForm> {
               textInputAction: TextInputAction.done,
               obscureText: passToggle,
               cursorColor: kPrimaryColor,
+              controller: passController,
               decoration: InputDecoration(
                   hintText: "Your password",
                   prefixIcon: Padding(
@@ -82,23 +118,33 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
           ),
-          const SizedBox(height: defaultPadding),
+          SwitchListTile(
+            title: Text(isPatient ? 'Patient' : 'Care Taker'),
+            value: isPatient,
+            onChanged: (bool value) {
+              setState(() {
+                isPatient = value;
+                role = isPatient ? 'patient' : 'careTaker';
+              });
+            },
+          ),
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formkey.currentState!.validate()) {
-                  print("Successfully logged in");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Nav();
-                      },
-                    ),
-                  );
-                  emailController.clear();
-                  passController.clear();
+                  if (await signin()) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Nav();
+                        },
+                      ),
+                    );
+                    emailController.clear();
+                    passController.clear();
+                  }
                 }
               },
               child: Text(

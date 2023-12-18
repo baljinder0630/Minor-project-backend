@@ -1,5 +1,7 @@
 //  caretaker side
 
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -7,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:minor_project/location/googleMap.dart';
 
 class LocationHomePage extends StatefulWidget {
   const LocationHomePage({super.key});
@@ -74,39 +77,65 @@ class _LocationHomePageState extends State<LocationHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: Stack(
       children: [
-        Center(
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: createGradient(_distance),
+        Container(
+            height: double.infinity,
+            child: Image.asset(
+              'assets/images/gmap.webp',
+              fit: BoxFit.cover,
+            )),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 70,
             ),
-            child: Center(
-              child: _distance == 0.0
-                  ? CircularProgressIndicator()
-                  : Text(
-                      '${_distance.toInt()} m',
-                      style: TextStyle(
-                        // color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: createGradient(_distance),
+                ),
+                child: Center(
+                  child: _distance == 0.0
+                      ? CircularProgressIndicator()
+                      : Text(
+                          '${_distance.toInt()} m',
+                          style: TextStyle(
+                            // color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                ),
+              ),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ElevatedButton(
-            onPressed: () async {
-              // await _determinePosition().then((value) => log(value.toString()));
-            },
-            child: const Text("Get Location"),
-          ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Patient is ${_distance.toInt()} m away from You",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (c) {
+                  //   return GoogleMapPage();
+                  // }));
+                },
+                child: const Text("Get Location"),
+              ),
+            ),
+          ],
         ),
       ],
     ));

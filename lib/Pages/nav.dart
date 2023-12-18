@@ -1,3 +1,4 @@
+import 'package:minor_project/location/location_home.dart';
 import 'package:minor_project/to_do/app/app.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class _NavState extends State<Nav> {
   final screens = [
     TodoHome(),
     Center(child: Text("gallery", style: TextStyle(fontSize: 72))),
-    Center(child: Text("map", style: TextStyle(fontSize: 72))),
+    LocationHomePage()
   ];
   @override
   Widget build(BuildContext context) {

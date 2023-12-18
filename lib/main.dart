@@ -3,10 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-<<<<<<< HEAD
-=======
-import 'package:minor_project/Pages/nav.dart';
->>>>>>> cea49b5c005ac4a00473655a34d6fad04cd87101
 import 'package:minor_project/Pages/welcome_screen.dart';
 import 'package:minor_project/constants.dart';
 import 'package:minor_project/location/location_home.dart';
@@ -64,7 +60,6 @@ class MyApp extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 56),
               ),
             ),
-<<<<<<< HEAD
             inputDecorationTheme: const InputDecorationTheme(
               filled: true,
               fillColor: kPrimaryLightColor,
@@ -77,24 +72,6 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             )),
-        // home: const LocationHomePage(),
         home: const WelcomeScreen());
-=======
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            fillColor: kPrimaryLightColor,
-            iconColor: kPrimaryColor,
-            prefixIconColor: kPrimaryColor,
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              borderSide: BorderSide.none,
-            ),
-          )),
-      home: const WelcomeScreen(),
-    );
->>>>>>> cea49b5c005ac4a00473655a34d6fad04cd87101
   }
 }
