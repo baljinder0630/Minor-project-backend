@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const TodoHome(),
+      home: const WelcomeScreen(),
     );
   }
 }
