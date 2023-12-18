@@ -704,6 +704,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "qr_bar_code",
+      "rootUri": "file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/qr_bar_code-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "riverpod",
       "rootUri": "file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/riverpod-2.4.9",
       "packageUri": "lib/",
@@ -974,7 +980,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-18T16:49:31.114283Z",
+  "generated": "2023-12-18T17:28:00.473340Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

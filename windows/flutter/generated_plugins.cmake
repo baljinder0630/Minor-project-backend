@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   geolocator_windows
   permission_handler_windows
+  qr_bar_code
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -1,3 +1,4 @@
+import 'package:minor_project/Pages/qrCodePage.dart';
 import 'package:minor_project/location/location_home.dart';
 import 'package:minor_project/to_do/app/app.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -15,7 +16,8 @@ class _NavState extends State<Nav> {
   final screens = [
     TodoHome(),
     Center(child: Text("gallery", style: TextStyle(fontSize: 72))),
-    LocationHomePage()
+    LocationHomePage(),
+    QrCodePage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,8 @@ class _NavState extends State<Nav> {
               NavigationDestination(icon: Icon(Icons.list), label: "ToDo"),
               NavigationDestination(icon: Icon(Icons.camera), label: "Gallery"),
               NavigationDestination(icon: Icon(Icons.map), label: "Location"),
+              NavigationDestination(
+                  icon: Icon(Icons.qr_code), label: "QR Code"),
             ]),
       ),
     );
