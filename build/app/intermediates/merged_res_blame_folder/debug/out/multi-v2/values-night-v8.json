@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.minor_project.app-mergeDebugResources-13:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.example.minor_project.app-mergeDebugResources-24:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "D:\\NITJ\\Flutter\\minor_project\\android\\app\\src\\main\\res\\values-night\\styles.xml",

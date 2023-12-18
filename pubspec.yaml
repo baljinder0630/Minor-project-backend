@@ -51,6 +51,8 @@ dependencies:
   google_fonts: ^6.1.0
   gap: ^3.0.1
   font_awesome_flutter: ^10.6.0
+  image_picker: ^1.0.5
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_test:

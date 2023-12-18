@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:http/http.dart' as http;
@@ -19,26 +20,34 @@ class _SignUpFormState extends State<SignUpForm> {
   bool passToggle = true;
   final emailController = TextEditingController();
   final firstnameController = TextEditingController();
+  bool isPatient = false;
 
   final passController = TextEditingController();
   final phoneController = TextEditingController();
 
-  //var url = Uri.https('https://assistalzheimer.onrender.com', '/api/signup');
+  String role = "careTaker";
 
-  // Future<bool> signup() async {
-  //   var response = await http.post(url, body: {
-  //     'email': emailController.text.trim(),
-  //     "password": passController.text.trim(),
-  //     "firstName": firstnameController.text.trim(),
-  //     "lastName": "AA",
-  //     "phoneNumber": phoneController.text.trim()
-  //   }).then((value) {
-  //     print(value.body);
-  //     // if(value.body =)
-  //   });
+  Future<bool> signup() async {
+    var url = Uri.https('https://assistalzheimer.onrender.com',
+        '/api/auth/signup', {'role': role});
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': emailController.text.trim(),
+        "password": passController.text.trim(),
+        "firstName": firstnameController.text.trim(),
+      }),
+    );
 
-  //   return false;
-  // }
+    print(response.body);
+
+    // You can add more logic here to handle the response
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +56,16 @@ class _SignUpFormState extends State<SignUpForm> {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            SwitchListTile(
+              title: Text(isPatient ? 'Patient' : 'Care Taker'),
+              value: isPatient,
+              onChanged: (bool value) {
+                setState(() {
+                  isPatient = value;
+                  role = isPatient ? 'patient' : 'careTaker';
+                });
+              },
+            ),
             TextFormField(
               textInputAction: TextInputAction.next,
               controller: firstnameController,
