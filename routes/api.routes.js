@@ -5,6 +5,6 @@ const router = express.Router()
 
 
 router.use("/todo", todo)
-router.use("/", auth)
+router.use("/auth", auth)
 
 export default router
