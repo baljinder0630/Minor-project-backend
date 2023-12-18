@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:minor_project/Pages/nav.dart';
+import 'package:minor_project/Pages/welcome_screen.dart';
 import 'package:minor_project/constants.dart';
 import 'package:minor_project/location/location_home.dart';
+import 'package:minor_project/to_do/app/app.dart';
 import 'package:timezone/data/latest_10y.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -70,7 +73,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const LocationHomePage(),
+      home: const WelcomeScreen(),
     );
   }
 }
