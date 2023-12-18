@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:minor_project/Pages/nav.dart';
+import 'package:minor_project/services/Todo/notification.dart';
+import 'package:minor_project/to_do/app/app.dart';
 
 import '../../already_have_an_account_acheck.dart';
 import '../../../constants.dart';
@@ -86,6 +89,14 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () {
                 if (_formkey.currentState!.validate()) {
                   print("Successfully logged in");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Nav();
+                      },
+                    ),
+                  );
                   emailController.clear();
                   passController.clear();
                 }

@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:minor_project/main.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class Notifications {
+class Notifications{
   static Future<void> showNotification() async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(
