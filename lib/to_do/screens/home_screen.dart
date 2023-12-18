@@ -30,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
           AppBackground(
             headerHeight: deviceSize.height * 0.3,
             header: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -47,12 +47,12 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           Positioned(
-            top: 130,
             left: 0,
             right: 0,
+            bottom: 0,
             child: SafeArea(
               child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

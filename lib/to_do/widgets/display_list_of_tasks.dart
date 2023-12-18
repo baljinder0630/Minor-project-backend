@@ -18,7 +18,7 @@ class DisplayListOfTasks extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceSize = context.deviceSize;
     final height =
-        isCompletedTasks ? deviceSize.height * 0.25 : deviceSize.height * 0.3;
+        isCompletedTasks ? deviceSize.height * 0.2 : deviceSize.height * 0.25;
     final emptyTasksAlert = isCompletedTasks
         ? 'There is no completed task yet'
         : 'There is no task to todo!';
@@ -33,6 +33,7 @@ class DisplayListOfTasks extends ConsumerWidget {
               ),
             )
           : ListView.separated(
+              physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               itemCount: tasks.length,
               padding: EdgeInsets.zero,
