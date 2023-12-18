@@ -21,7 +21,6 @@ const patientSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
     }
 }, { timestamps: true });
 

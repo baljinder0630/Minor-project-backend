@@ -9,7 +9,7 @@ const signup = async (req, res, next) => {
         console.log(role);
         const { email, password, firstName, lastName, phoneNumber } = req.body;
 
-        if (!email || !isEmail(email) || !firstName  || !phoneNumber) {
+        if (!email || !isEmail(email) || !firstName || !password) {
             return res.json({ success: false, message: "Some fields are empty" });
         }
 

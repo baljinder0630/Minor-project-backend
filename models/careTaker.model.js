@@ -22,7 +22,7 @@ const careTakerSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
+        // required: true
     },
     assignedPatients: [{
         type: mongoose.Schema.Types.ObjectId,
