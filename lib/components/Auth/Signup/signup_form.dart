@@ -23,22 +23,22 @@ class _SignUpFormState extends State<SignUpForm> {
   final passController = TextEditingController();
   final phoneController = TextEditingController();
 
-  var url = Uri.https('https://assistalzheimer.onrender.com', '/api/signup');
+  //var url = Uri.https('https://assistalzheimer.onrender.com', '/api/signup');
 
-  Future<bool> signup() async {
-    var response = await http.post(url, body: {
-      'email': emailController.text.trim(),
-      "password": passController.text.trim(),
-      "firstName": firstnameController.text.trim(),
-      "lastName": "AA",
-      "phoneNumber": phoneController.text.trim()
-    }).then((value) {
-      print(value.body);
-      // if(value.body =)
-    });
+  // Future<bool> signup() async {
+  //   var response = await http.post(url, body: {
+  //     'email': emailController.text.trim(),
+  //     "password": passController.text.trim(),
+  //     "firstName": firstnameController.text.trim(),
+  //     "lastName": "AA",
+  //     "phoneNumber": phoneController.text.trim()
+  //   }).then((value) {
+  //     print(value.body);
+  //     // if(value.body =)
+  //   });
 
-    return false;
-  }
+  //   return false;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +152,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ElevatedButton(
               onPressed: () {
                 if (_formkey.currentState!.validate()) {
-                  signup();
+                  //signup();
 
                   emailController.clear();
                   passController.clear();
