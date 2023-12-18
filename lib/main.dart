@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minor_project/Pages/NotificationPage.dart';
 import 'package:minor_project/Pages/todo_screen.dart';
 import 'package:minor_project/Pages/welcome_screen.dart';
 import 'package:minor_project/constants.dart';
+import 'package:minor_project/to_do/app/app.dart';
 import 'package:timezone/data/latest_10y.dart';
 
 FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -34,7 +36,7 @@ void main() async {
 
   log("Notification initialized $initialized");
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: WelcomeScreen(),
+      home: const TodoHome(),
     );
   }
 }
