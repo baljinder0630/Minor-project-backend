@@ -1,4 +1,4 @@
-#Thu Oct 12 12:43:02 IST 2023
-base.0=D\:\\minor_project\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
+#Mon Dec 18 14:29:27 IST 2023
+base.0=D\:\\NITJ\\Flutter\\minor_project\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
+path.0=classes.dex
