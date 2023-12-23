@@ -12,17 +12,14 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password is required"]
     },
-    firstName: {
+    name: {
         type: String,
         required: true
-    },
-    lastName: {
-        type: String,
     },
     phoneNumber: {
         type: String,
     },
-    refreshToken:[String],
+    refreshToken: [String],
     latitude: {
         type: String,
     },
