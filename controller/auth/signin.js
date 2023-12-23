@@ -12,7 +12,7 @@ const signin = async (req, res, next) => {
 
         }
 
-        if (role === 'patient') {
+        if (role == 'patient') {
 
             let patient = await  patientModel.findOne({ email })
             if (!patient) {
@@ -55,7 +55,7 @@ const signin = async (req, res, next) => {
             res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken });
 
         }
-        else if (role === 'careTaker') {
+        else if (role == 'careTaker') {
 
             let careTaker =await  careTakerModel.findOne({ email })
             if (!careTaker) {
