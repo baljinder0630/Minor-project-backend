@@ -13,17 +13,15 @@ const careTakerSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password is required"]
     },
-    firstName: {
+    name: {
         type: String,
         required: true
-    },
-    lastName: {
-        type: String,
     },
     phoneNumber: {
         type: String,
         // required: true
     },
+    refreshToken: [String],
     assignedPatients: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: patientModel.modelName
