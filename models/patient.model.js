@@ -22,6 +22,7 @@ const patientSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
     },
+    refreshToken:[String],
     latitude: {
         type: String,
     },

@@ -24,6 +24,7 @@ const careTakerSchema = new mongoose.Schema({
         type: String,
         // required: true
     },
+    refreshToken:[String],
     assignedPatients: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: patientModel.modelName
