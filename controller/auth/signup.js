@@ -19,7 +19,7 @@ const signup = async (req, res, next) => {
 
         let hashedPassword = await bcrypt.hash(password, await bcrypt.genSalt(10));
 
-        if (role === 'patient') {
+        if (role == 'patient') {
 
             const duplicate = await patientModel.findOne({ email });
             if (duplicate) {
@@ -36,7 +36,7 @@ const signup = async (req, res, next) => {
 
             return res.status(200).json({ success: true, message: "Patient registered successfully", accessToken, refreshToken });
         }
-        else if (role === 'careTaker') {
+        else if (role == 'careTaker') {
 
             const duplicate = await careTakerModel.findOne({ email });
             if (duplicate) {
