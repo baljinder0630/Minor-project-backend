@@ -1,70 +1,37 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, prefer_const_constructors
 
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minor_project/Pages/nav.dart';
-
-import '../../../components/already_have_an_account_acheck.dart';
+import 'package:minor_project/Provider/userProvider.dart';
 import '../../../constants.dart';
-import '../../../Pages/login_screen.dart';
 
-class SignUpForm extends StatefulWidget {
+class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends ConsumerState<SignUpForm> {
   final _formkey = GlobalKey<FormState>();
   bool passToggle = true;
-  final emailController = TextEditingController();
-  final firstnameController = TextEditingController();
   bool isPatient = false;
   String role = "careTaker";
 
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
   final passController = TextEditingController();
-  final phoneController = TextEditingController();
+  final contactNumberController = TextEditingController();
 
-  Future<bool> signup() async {
-    var url = Uri.https(
-        'assistalzheimer.onrender.com', '/api/auth/signup', {'role': role});
-
-    var response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'email': emailController.text.trim(),
-        'password': passController.text.trim(),
-        'firstName': firstnameController.text.trim(),
-        'phoneNumber': phoneController.text.trim(),
-      }),
-    );
-    print(role +
-        ' email :' +
-        emailController.text.trim() +
-        ' password : ' +
-        passController.text.trim() +
-        ' firstName ' +
-        firstnameController.text.trim() +
-        ' phoneNumber : ' +
-        phoneController.text.trim());
-    print(response.body);
-    final data = jsonDecode(response.body);
-    if (data["status"] == true) {
-      // Successful response, you may want to parse response.body for further information
-      return true;
-    } else {
-      // Unsuccessful response, handle accordingly
-      final snackBar = SnackBar(content: Text(data["message"]));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return false;
-    }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passController.dispose();
+    nameController.dispose();
+    contactNumberController.dispose();
+    super.dispose();
   }
 
   @override
@@ -80,7 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
             children: [
               TextFormField(
                 textInputAction: TextInputAction.next,
-                controller: firstnameController,
+                controller: nameController,
                 cursorColor: kPrimaryColor,
                 onSaved: (firstname) {},
                 decoration: InputDecoration(
@@ -163,7 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
               TextFormField(
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
-                controller: phoneController,
+                controller: contactNumberController,
                 cursorColor: kPrimaryColor,
                 onSaved: (firstname) {},
                 decoration: InputDecoration(
@@ -195,7 +162,22 @@ class _SignUpFormState extends State<SignUpForm> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formkey.currentState!.validate()) {
-                    if (await signup()) {
+                    final resp = await ref
+                        .read(authStateProvider.notifier)
+                        .signUp(
+                            email: emailController.text.trim(),
+                            password: passController.text.trim(),
+                            name: nameController.text.trim(),
+                            contactNumber: contactNumberController.text.trim(),
+                            role: role);
+
+                    if (resp["success"] == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(resp["message"]),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -204,8 +186,13 @@ class _SignUpFormState extends State<SignUpForm> {
                           },
                         ),
                       );
-                      emailController.clear();
-                      passController.clear();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(resp["message"]),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
                     }
                   }
                 },

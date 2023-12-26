@@ -1,7 +1,7 @@
 import 'package:minor_project/Pages/qrCodePage.dart';
 import 'package:minor_project/location/location_home.dart';
 import 'package:minor_project/to_do/app/app.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class Nav extends StatefulWidget {
@@ -13,12 +13,24 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   int index = 0;
+  // SharedPreferences prefs =await
+  //     SharedPreferences.getInstance() as SharedPreferences;
+  String? role = "";
   final screens = [
     TodoHome(),
     Center(child: Text("gallery", style: TextStyle(fontSize: 72))),
     LocationHomePage(),
     QrCodePage()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // role = prefs.getString("role") == "" ? "patient" : prefs.getString("role");
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

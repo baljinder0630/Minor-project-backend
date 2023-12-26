@@ -1,25 +1,23 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minor_project/Pages/nav.dart';
-import 'package:minor_project/services/Todo/notification.dart';
-import 'package:minor_project/to_do/app/app.dart';
-
+import 'package:minor_project/Provider/userProvider.dart';
 import '../../already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../Pages/signup_screen.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends ConsumerState<LoginForm> {
   final _formkey = GlobalKey<FormState>();
   bool passToggle = true;
   bool isPatient = false;
@@ -27,32 +25,12 @@ class _LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
-  Future<bool> signin() async {
-    var url = Uri.https(
-        'assistalzheimer.onrender.com', '/api/auth/signin', {'role': role});
-
-    var response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'email': emailController.text.trim(),
-        'password': passController.text.trim(),
-      }),
-    );
-
-    print(response.body);
-    final data = jsonDecode(response.body);
-    if (data["success"] == true) {
-      // Successful response, you may want to parse response.body for further information
-      return true;
-    } else {
-      // Unsuccessful response, handle accordingly
-      final snackBar = SnackBar(content: Text(data["message"]));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return false;
-    }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
   }
 
   @override
@@ -133,7 +111,18 @@ class _LoginFormState extends State<LoginForm> {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formkey.currentState!.validate()) {
-                  if (await signin()) {
+                  var resp = await ref.read(authStateProvider.notifier).signIn(
+                      email: emailController.text.trim(),
+                      password: passController.text.trim(),
+                      role: role);
+                  log(resp.toString());
+                  if (resp["success"] == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Login Successful"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -142,8 +131,13 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                     );
-                    emailController.clear();
-                    passController.clear();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Login Failed"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
                 }
               },
