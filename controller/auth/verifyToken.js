@@ -14,7 +14,7 @@ const verifyToken = async (req, res, next) => {
                 }
                 else{
                     console.log(decoded)
-                    return res.status(200).json({success:true,message:"Valid token"})
+                    return res.status(200).json({success:true,message:"Valid token",email:decoded.email,role:decoded.role})
                 }
                 
             }
