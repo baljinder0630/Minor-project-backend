@@ -16,7 +16,7 @@ const refreshToken = async (req, res, next) => {
             process.env.REFRESH_TOKEN_SECRET,
             (err, decoded) => {
                 if (err) {
-                    return res.status(404).json({ success: false, message: "1Invalid refresh token" })
+                    return res.status(404).json({ success: false, message: "Invalid refresh token" })
                 }
                 else {
                     role = decoded.role;
@@ -24,10 +24,6 @@ const refreshToken = async (req, res, next) => {
                 }
             }
         )
-
-
-
-
 
 
         if (role == 'patient') {
@@ -65,12 +61,12 @@ const refreshToken = async (req, res, next) => {
                         const email = patient.email;
                         const patientId = patient._id;
                         const accessToken = jwt.sign(
-                            { email, patientId },
+                            { email, patientId, role: 'patient' },
                             process.env.ACCESS_TOKEN_SECRET,
                             { expiresIn: '1d' }
                         );
                         const newRefreshToken = jwt.sign(
-                            { email, patientId },
+                            { email, patientId, role: 'patient' },
                             process.env.REFRESH_TOKEN_SECRET,
                             { expiresIn: '7d' }
                         );
@@ -123,12 +119,14 @@ const refreshToken = async (req, res, next) => {
                         const email = careTaker.email;
                         const careTakerId = careTaker._id;
                         const accessToken = jwt.sign(
-                            { email, careTakerId },
+                            { email, careTakerId, role: 'careTaker' },
                             process.env.ACCESS_TOKEN_SECRET,
                             { expiresIn: '1d' }
                         );
                         const newRefreshToken = jwt.sign(
-                            { email, careTakerId },
+                            {
+                                email, careTakerId, role: 'careTaker'
+                            },
                             process.env.REFRESH_TOKEN_SECRET,
                             { expiresIn: '7d' }
                         );
@@ -147,8 +145,8 @@ const refreshToken = async (req, res, next) => {
 
             }
         }
-else
-        return res.status(404).json({ success: false, message: "Invalid refresh token" })
+        else
+            return res.status(404).json({ success: false, message: "Invalid refresh token" })
 
     } catch (error) {
         console.log(error.message)

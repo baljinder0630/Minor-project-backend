@@ -14,7 +14,7 @@ const signin = async (req, res, next) => {
 
         if (role == 'patient') {
 
-            let patient = await  patientModel.findOne({ email })
+            let patient = await patientModel.findOne({ email })
             if (!patient) {
                 return res.json({ "success": false, "message": "Patient not exist" })
             }
@@ -23,20 +23,14 @@ const signin = async (req, res, next) => {
                 return res.status(404).json({ "success": false, "message": 'Invalid Password or email' });
             }
 
-            const accessToken = jwt.sign({ email, patientId: patient._id ,role:"patient"}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+            const accessToken = jwt.sign({ email, patientId: patient._id, role: "patient" }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
 
-            const refreshToken = jwt.sign({ email, patientId: patient._id ,role :"patient"}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+            const refreshToken = jwt.sign({ email, patientId: patient._id, role: "patient" }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
             // when existingRefreshToken is not empty, remove it from patient.refreshToken array (refreshing the token condition)
-            let newRefreshTokenArray = existingRefreshToken == "" ? patient.refreshToken : patient.refreshToken.filter((token)=>token!==existingRefreshToken);
+            let newRefreshTokenArray = existingRefreshToken == "" ? patient.refreshToken : patient.refreshToken.filter((token) => token !== existingRefreshToken);
 
-            if(existingRefreshToken != ""){
-                /*
-                Scenario added here: 
-                    1) User logs in but never uses RT and does not logout 
-                    2) RT is stolen
-                    3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
-                */
+            if (existingRefreshToken) {
 
                 const refreshToken = existingRefreshToken;
                 const foundToken = await patientModel.findOne({ refreshToken: refreshToken }).exec();
@@ -57,7 +51,7 @@ const signin = async (req, res, next) => {
         }
         else if (role == 'careTaker') {
 
-            let careTaker =await  careTakerModel.findOne({ email })
+            let careTaker = await careTakerModel.findOne({ email })
             if (!careTaker) {
                 return res.json({ "success": false, "message": "CareTaker not exist" })
             }
@@ -68,20 +62,15 @@ const signin = async (req, res, next) => {
             }
 
 
-            const accessToken = jwt.sign({ email, caretakerId: careTaker._id ,role:'careTaker'}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+            const accessToken = jwt.sign({ email, caretakerId: careTaker._id, role: 'careTaker' }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
 
-            const refreshToken = jwt.sign({ email, caretakerId: careTaker._id ,role:"careTaker"}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+            const refreshToken = jwt.sign({ email, caretakerId: careTaker._id, role: "careTaker" }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
             // when existingRefreshToken is not empty, remove it from caretaker.refreshToken array (refreshing the token condition)
             let newRefreshTokenArray = existingRefreshToken == "" ? careTaker.refreshToken : careTaker.refreshToken.filter((token) => token !== existingRefreshToken);
 
-            if (existingRefreshToken != "") {
-                /*
-                Scenario added here: 
-                    1) User logs in but never uses RT and does not logout 
-                    2) RT is stolen
-                    3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
-                */
+            if (existingRefreshToken) {
+
 
                 const refreshToken = existingRefreshToken;
                 const foundToken = await careTakerModel.findOne({ refreshToken: refreshToken }).exec();
