@@ -30,6 +30,7 @@ const getUserInfo = async (req, res) => {
             success: true,
             email: patient.email,
             name: patient.name,
+            id: patient._id,
             // phoneNumber: patient.phoneNumber
         })
     }
@@ -45,6 +46,7 @@ const getUserInfo = async (req, res) => {
             success: true,
             email: careTaker.email,
             // phoneNumber: careTaker.phoneNumber,
+            id: careTaker._id,
             name: careTaker.name,
         })
 
