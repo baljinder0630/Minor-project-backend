@@ -46,7 +46,7 @@ const signin = async (req, res, next) => {
             patient.refreshToken = [...newRefreshTokenArray, refreshToken];
             await patient.save();
 
-            res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken });
+            res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken, userId: patient._id });
 
         }
         else if (role == 'careTaker') {
@@ -85,7 +85,7 @@ const signin = async (req, res, next) => {
 
             careTaker.refreshToken = [...newRefreshTokenArray, refreshToken];
             await careTaker.save();
-            res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken });
+            res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken, userId: careTaker._id });
 
         }
         else {
