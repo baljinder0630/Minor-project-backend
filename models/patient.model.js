@@ -16,10 +16,13 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    refreshToken: [String],
+    socketId: {
+        type: String
+    },
     phoneNumber: {
         type: String,
     },
-    refreshToken: [String],
     latitude: {
         type: String,
     },

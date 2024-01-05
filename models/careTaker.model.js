@@ -17,6 +17,9 @@ const careTakerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    socketId: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         // required: true

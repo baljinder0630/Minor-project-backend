@@ -3,12 +3,12 @@ import careTakerModel from "../../models/careTaker.model.js";
 
 const getUserInfo = async (req, res) => {
 
-    const { email, role } = req.body;
-
-    if (!email || !role) {
+    const { userId, role } = req.body;
+    console.log(userId, role)
+    if (!userId || !role) {
         return res.status(400).json({
             success: false,
-            message: "Email or role is not provided"
+            message: "UserId or role is not provided"
         })
     }
     if (role !== "patient" && role !== "careTaker") {
@@ -19,7 +19,7 @@ const getUserInfo = async (req, res) => {
     }
 
     if (role === "patient") {
-        const patient = await patientModel.findOne({ email: email });
+        const patient = await patientModel.findOne({ _id: userId });
         if (!patient) {
             return res.status(400).json({
                 success: false,
@@ -28,14 +28,15 @@ const getUserInfo = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            email: patient.email,
+            userId: patient.userId,
             name: patient.name,
             id: patient._id,
+            email: patient.email,
             // phoneNumber: patient.phoneNumber
         })
     }
     else if (role === "careTaker") {
-        const careTaker = await careTakerModel.findOne({ email: email });
+        const careTaker = await careTakerModel.findOne({ _id: userId });
         if (!careTaker) {
             return res.status(400).json({
                 success: false,
@@ -44,9 +45,10 @@ const getUserInfo = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            email: careTaker.email,
+            userId: careTaker.userId,
             // phoneNumber: careTaker.phoneNumber,
             id: careTaker._id,
+            email: careTaker.email,
             name: careTaker.name,
         })
 
