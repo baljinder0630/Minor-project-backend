@@ -28,9 +28,8 @@ const getUserInfo = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            userId: patient.userId,
+            userId: patient._id,
             name: patient.name,
-            id: patient._id,
             email: patient.email,
             // phoneNumber: patient.phoneNumber
         })
@@ -45,9 +44,8 @@ const getUserInfo = async (req, res) => {
         }
         return res.status(200).json({
             success: true,
-            userId: careTaker.userId,
             // phoneNumber: careTaker.phoneNumber,
-            id: careTaker._id,
+            userId: careTaker._id,
             email: careTaker.email,
             name: careTaker.name,
         })
