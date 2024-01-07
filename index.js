@@ -7,6 +7,7 @@ import cors from 'cors'
 import { Server } from 'socket.io'
 import patientModel from "./models/patient.model.js"
 import careTakerModel from "./models/careTaker.model.js"
+import mongoose from "mongoose"
 // import allocateCaretaker from "./service/allocateCaretaker.service.js"
 
 dotenv.config()
@@ -63,7 +64,10 @@ io.on('connection', (socket) => {
 
         console.log('Updating location', data);
         const { userId } = data;  // checking which careTaker is assigned to this patient
-
+        if (!userId) {
+            console.log('Invalid data in update location ');
+            return;
+        }
         const careTaker = await careTakerModel.findOne({ assignedPatients: { $in: [userId] } });
         // const careTaker = await careTakerModel.findOne({ _id: careTakerId });
         // console.log('CareTaker :- ', careTaker);

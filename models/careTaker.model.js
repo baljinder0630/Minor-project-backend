@@ -27,7 +27,6 @@ const careTakerSchema = new mongoose.Schema({
     refreshToken: [String],
     assignedPatients: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: patientModel.modelName
     }]
 }, { timestamps: true });
 

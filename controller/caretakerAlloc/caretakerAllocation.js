@@ -6,7 +6,7 @@ const allocateCaretaker = async (req, res) => {
 
     try {
         const { caretakerId, patientId } = req.query;
-         if (!mongoose.Types.ObjectId.isValid(caretakerId) || !mongoose.Types.ObjectId.isValid(patientId))
+        if (!mongoose.Types.ObjectId.isValid(caretakerId) || !mongoose.Types.ObjectId.isValid(patientId))
             return res.status(400).send({ success: false, message: "Invalid Ids" })
 
         const caretaker = await careTakerModel.findById(caretakerId);
@@ -18,7 +18,7 @@ const allocateCaretaker = async (req, res) => {
             return res.status(404).send({ success: false, message: "Patient not found" })
 
         if (!caretaker.assignedPatients.includes(patientId)) {
-            caretaker.assignedPatients.push(patientId);
+            caretaker.assignedPatients.push(new mongoose.Types.ObjectId(patientId));
             await caretaker.save();
             return res.status(200).send({ success: true, message: "Caretaker assigned to patient" })
         }
