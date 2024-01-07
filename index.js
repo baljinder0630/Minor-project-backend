@@ -62,10 +62,10 @@ io.on('connection', (socket) => {
     socket.on('updateLocation', async (data) => {
 
         console.log('Updating location', data);
-        const { userId, careTakerId } = data;  // checking which careTaker is assigned to this patient
+        const { userId } = data;  // checking which careTaker is assigned to this patient
 
-        // const careTaker = await careTakerModel.findOne({ assignedPatients: { $in: [userId] } });
-        const careTaker = await careTakerModel.findOne({ _id: careTakerId });
+        const careTaker = await careTakerModel.findOne({ assignedPatients: { $in: [userId] } });
+        // const careTaker = await careTakerModel.findOne({ _id: careTakerId });
         // console.log('CareTaker :- ', careTaker);
         if (!careTaker) {
             return;
