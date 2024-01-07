@@ -28,9 +28,9 @@ const verifyToken = async (req, res, next) => {
                     return res.status(200).json({
                         success: true, message: "Valid token",
                         email: decoded.email,
-                        userId: decoded.userId,
+                        
                         role: decoded.role,
-                        userId: decoded.role == 'patient' ? decoded.patientId : decoded.careTakerId
+                        userId: decoded.role == 'patient' ? decoded.patientId : decoded.caretakerId
                     })
                 }
 
