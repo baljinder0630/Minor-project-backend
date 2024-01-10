@@ -78,7 +78,8 @@ const refreshToken = async (req, res, next) => {
                             message: 'New Access Token assigned successfully',
                             newAccessToken: accessToken,
                             newRefreshToken: newRefreshToken,
-                            userId: decoded.patientId
+                            userId: decoded.patientId,
+                            role: 'patient'
                         })
 
                     }
@@ -139,7 +140,9 @@ const refreshToken = async (req, res, next) => {
                             message: 'New Access Token assigned successfully',
                             newAccessToken: accessToken,
                             newRefreshToken: newRefreshToken,
-                            userId: decoded.careTakerId
+                            userId: decoded.careTakerId,
+                            role: 'careTaker'
+
                         })
 
                     }

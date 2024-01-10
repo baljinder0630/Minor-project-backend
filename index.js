@@ -5,10 +5,9 @@ import db from "./config/db.js"
 import http from 'http'
 import cors from 'cors'
 import { Server } from 'socket.io'
-import patientModel from "./models/patient.model.js"
-import careTakerModel from "./models/careTaker.model.js"
-import mongoose from "mongoose"
-// import allocateCaretaker from "./service/allocateCaretaker.service.js"
+import registerSocket from "./controller/socket/registerSocket.js"
+import assignTask from "./controller/socket/assignTask.js"
+import updateLocation from "./controller/socket/updateLocation.js"
 
 dotenv.config()
 const app = express()
@@ -26,65 +25,28 @@ app.use(cors())
 io.on('connection', (socket) => {
 
     console.log('New Socket connection');
-
-    socket.on('registerSocket', async (data) => {
-        console.log('Registering socket :- ', data);
-        const userId = data.userId;
-        const role = data.role;
-        console.log(userId, role);
-
-        if (!userId) {
-            return;
-        }
-        if (role == 'patient') {
-            const user = await patientModel.findOne({ _id: userId });
-            // console.log('User :- ', user);
-            if (!user) {
-                return;
-            }
-            user.socketId = socket.id;
-            await user.save();
-        }
-        else if (role == 'careTaker') {
-            const user = await careTakerModel.findOne({ _id: userId });
-            // console.log('User :- ', user);
-            if (!user) {
-                return;
-            }
-            user.socketId = socket.id;
-            await user.save();
-        }
-        else {
-            console.log('Invalid role');
-            return;
-        }
-    })
+    const userId = socket.handshake.auth.userId;
+    const role = socket.handshake.auth.role;
+    console.log(userId, role);
+    if (!userId || !role) {
+        socket.disconnect();
+        console.log("Invalid user")
+        return;
+    }
+    else
+        registerSocket(userId, role, socket); // saving the socket id in the database
 
     socket.on('updateLocation', async (data) => {
-
-        console.log('Updating location', data);
-        const { userId } = data;  // checking which careTaker is assigned to this patient
-        if (!userId) {
-            console.log('Invalid data in update location ');
-            return;
-        }
-        const careTaker = await careTakerModel.findOne({ assignedPatients: { $in: [userId] } });
-        // const careTaker = await careTakerModel.findOne({ _id: careTakerId });
-        // console.log('CareTaker :- ', careTaker);
-        if (!careTaker) {
-            return;
-        }
-        console.log("location send");
-        socket.to(careTaker.socketId).emit('updateLocation', data);
+        updateLocation(data, socket);
+    })
+    socket.on('assignTaskToPatient', async (data) => {
+        assignTask(data, socket);
     })
 
-    // socket.on('allocateCaretaker', async (data) => { 
-    //     if (!data.caretakerId || !data.patientId) {
-    //         console.log('Invalid data');
-    //         return;
-    //     }
-    //     await allocateCaretaker(data.caretakerId, data.patientId);
-    // })
+
+
+
+
 });
 
 
