@@ -1,4 +1,5 @@
 import careTakerModel from "../../models/careTaker.model.js";
+import { careTakers } from "../../serverMap.js";
 
 const updateLocation = async (data, socket) => {
 
@@ -14,12 +15,16 @@ const updateLocation = async (data, socket) => {
             console.log('No careTaker found for patient ' + patientId);
             return;
         }
+        if (!careTakers.get(careTaker._id)) {
+            console.log("Caretaker offline")
+            return;
+        }
         if (socket.to(careTaker.socketId).emit('updateLocation', data)) {
             console.log('location send from ' + patientId + ' to ' + careTaker._id);
         }
 
     } catch (error) {
-        consoleq.log(error);
+        console.log(error);
     }
 
 }

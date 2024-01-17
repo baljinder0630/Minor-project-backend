@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import db from "../config/db.js"
-import patientModel from "./patient.model.js";
 
 const careTakerSchema = new mongoose.Schema({
     email: {

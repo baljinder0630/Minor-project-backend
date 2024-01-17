@@ -1,27 +1,24 @@
 import patientModel from "../../models/patient.model.js";
 import Task from "../../models/task.model.js";
+import { patients } from "../../serverMap.js";
 
 const assignTask = async (data, socket) => {
     try {
 
-        // { 'userId': patientId, 'task': task, 'careTakerId': careTakerId });
-
         const patientId = data.to;
-        if (!patientId) {
-            console.log('Patient id not found in assign task');
-            return;
-        }
-        const patient = await patientModel.findOne({ _id: patientId });
-        if (!patient) {
-            console.log('No patient found with id ' + patientId);
-            return;
-        }
+        const careTakerId = data.from;
+        const patientSocketId = patients.get(patientId);
 
-        console.log(data);
-        if (socket.to(patient.socketId).emit('tasksFromCareTaker', data)) {
-            console.log('task send from ' + patientId + ' to ' + patient._id);
+        if (patientSocketId && socket.to(patientSocketId).emit('tasksFromCareTaker', data)) {
+            console.log('task send from ' + careTakerId + ' to ' + patientId);
         }
         else {
+            console.log("Patient offline")
+            const patient = await patientModel.findOne({ _id: patientId });
+            if (!patient) {
+                console.log('No patient found with id ' + patientId);
+                return;
+            }
             const task = new Task({
                 id: data.task.id,
                 title: data.task.title,
@@ -31,9 +28,11 @@ const assignTask = async (data, socket) => {
                 date: data.task.date,
                 assignedBy: data.task.assignedBy,
                 isCompleted: data.task.isCompleted,
-                from: data.to,
-                to: data.from,
+                from: data.from,
+                to: data.to,
             })
+            await task.save();
+            console.log("Saving task in mongo");
         }
     } catch (error) {
         console.log(error);

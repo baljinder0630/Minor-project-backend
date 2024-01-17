@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import db from "../config/db.js"
+
 
 const TaskSchema = new mongoose.Schema({
     "id": { type: String },
@@ -13,6 +15,6 @@ const TaskSchema = new mongoose.Schema({
     "to": { type: String, required: true },
 })
 
-const Task = mongoose.model('Task', TaskSchema);
+const Task = db.model('tasks', TaskSchema);
 
 export default Task;
