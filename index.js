@@ -9,6 +9,7 @@ import assignTask from "./controller/socket/assignTask.js"
 import updateLocation from "./controller/socket/updateLocation.js"
 import { careTakers, patients } from "./serverMap.js"
 import Task from "./models/task.model.js"
+import { setTimeout } from "timers"
 
 dotenv.config()
 const app = express()
@@ -40,12 +41,16 @@ io.on('connection', async (socket) => {
         await Task.find({ to: userId }).then((tasks) => {
             tasks.forEach((task) => {
 
-                console.log(task);
-                socket.to(socket.id).emit('tasksFromCareTaker', task)
+                // console.log(task);
+                console.log("Task from mongo to patient " + userId);
+                assignTask(task, socket);
+
+                // socket.to(socket.id).emit('tasksFromCareTaker', task)
                 // socket.emit('tasksFromCareTaker', task);
                 // delete the task from mongo
                 task.deleteOne();
             })
+
 
 
         }).catch((error) => {
