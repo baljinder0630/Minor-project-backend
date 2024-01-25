@@ -41,7 +41,8 @@ io.on('connection', async (socket) => {
             tasks.forEach((task) => {
 
                 console.log(task);
-                socket.emit('tasksFromCareTaker', task);
+                socket.to(socket.id).emit('tasksFromCareTaker', task)
+                // socket.emit('tasksFromCareTaker', task);
                 // delete the task from mongo
                 task.deleteOne();
             })
@@ -72,9 +73,11 @@ io.on('connection', async (socket) => {
         console.log(`User with id ${userId} disconnected`);
         if (role === 'patient') {
             patients.delete(userId);
+            console.log("Patient disconnected")
         }
         else if (role === 'careTaker') {
             careTakers.delete(userId);
+            console.log("CareTaker disconnected")
         }
         else {
             console.log("Invalid role in disconnect")
