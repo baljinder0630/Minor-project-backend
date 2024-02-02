@@ -93,6 +93,11 @@ io.on('connection', async (socket) => {
 
 
 app.use('/api', api)
+
+app.get('/', (req, res) => {
+    return res.status(200).send("Hi, " + process.env.NAME + " is here")
+})
+
 app.get('/health', (req, res) => {
     return res.status(200).send("Health OK")
 })
