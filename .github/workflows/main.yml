@@ -54,7 +54,7 @@ jobs:
             docker ps --filter "ancestor=prod-backend" -q | xargs -r docker stop
             docker build -t prod-backend .  # Build the Docker image
             docker images
-            docker run --rm -d -p 5000:5000 --init prod-backend
+            docker run --rm -d -p 7000:5000 --init prod-backend
             docker ps
             echo "Prod deployment complete"
           ENDSSH
