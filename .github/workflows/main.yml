@@ -20,6 +20,7 @@ jobs:
 
       - name: Add Azure VM's host key to known hosts
         run: |
+          echo "Ip address ${{ secrets.AZURE_VM_HOST }}"
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/authorized_keys
 
