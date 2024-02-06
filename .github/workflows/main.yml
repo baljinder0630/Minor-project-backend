@@ -1,0 +1,59 @@
+name: Minor Project Deployment
+
+on:
+  push:
+    branches:
+      - BackendMain
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add Azure VM's host key to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy code to Azure VM
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.AZURE_VM_HOST }}
+          username: ${{ secrets.AZURE_VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: .
+          target: /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend
+
+      - name: Copy env
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private-key.pem
+          chmod 600 private-key.pem
+
+          ssh -i private-key.pem ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} -o StrictHostKeyChecking=no << 'ENDSSH'
+            cd /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend
+            touch .env
+            cp /home/${{ secrets.AZURE_VM_USERNAME }}/production/MinorProject/.env /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend/.env
+          ENDSSH
+
+      - name: Build and run Docker image on Azure VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private-key.pem
+          chmod 600 private-key.pem
+
+          ssh -i private-key.pem ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} -o StrictHostKeyChecking=no << 'ENDSSH'
+            cd /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend
+            docker ps --filter "ancestor=prod-backend" -q | xargs -r docker stop
+            docker build -t prod-backend .  # Build the Docker image
+            docker images
+            docker run --rm -d -p 5000:5000 --init prod-backend
+            docker ps
+            echo "Prod deployment complete"
+          ENDSSH
