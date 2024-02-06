@@ -7,5 +7,5 @@ COPY package.json yarn.lock ./
 RUN yarn install 
 
 COPY . .
-EXPOSE 5000
+EXPOSE 7000
 CMD [ "node" ,"index.js"]
