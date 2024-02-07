@@ -5,6 +5,7 @@ import careTakerModel from '../../models/careTaker.model.js';
 
 dotenv.config();
 
+
 const logout = async (req, res) => {
     const { refreshToken } = req.body;
     try {
