@@ -39,9 +39,9 @@ jobs:
           chmod 600 private-key.pem
 
           ssh -i private-key.pem ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }} -o StrictHostKeyChecking=no << ENDSSH
-            cd /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend
-            touch .env
-            cp /home/${{ secrets.AZURE_VM_USERNAME }}/production/MinorProject/.env /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend/.env
+            sudo cd /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend
+            sudo touch .env
+            sudo cp /home/${{ secrets.AZURE_VM_USERNAME }}/production/MinorProject/.env /home/${{ secrets.AZURE_VM_USERNAME }}/prod/backend/.env
           ENDSSH
 
       - name: Build and run Docker image on Azure VM
