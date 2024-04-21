@@ -66,7 +66,7 @@ io.on('connection', async (socket) => {
                     // socket.to(socket.id).emit('tasksFromCareTaker', task)
                     // socket.emit('tasksFromCareTaker', task);
                     // delete the task from mongo
-                    //task.deleteOne();
+                    task.deleteOne();
                 })
             }, 3000)
 
