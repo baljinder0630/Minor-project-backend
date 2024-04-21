@@ -9,8 +9,9 @@ const assignTask = async (data, socket) => {
         const careTakerId = data.from;
         const patientSocketId = patients.get(patientId);
 
+        console.log('Patient socket id: ' + patientSocketId)
         if (patientSocketId && socket.to(patientSocketId).emit('tasksFromCareTaker', data)) {
-            console.log('task send from ' + careTakerId + ' to ' + patientId);
+            console.log('task send from ' + careTakerId + ' to ' + patientId, data);
         }
         else {
             console.log("Patient offline")
