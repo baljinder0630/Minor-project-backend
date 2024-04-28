@@ -15,12 +15,14 @@ const updateLocation = async (data, socket) => {
             console.log('No careTaker found for patient ' + patientId);
             return;
         }
-        if (!careTakers.get(careTaker._id)) {
+        // console.log(careTaker.id)
+        const careTakerSocket = careTakers.get(careTaker.id)
+        if (!careTakerSocket) {
             console.log("Caretaker offline")
             return;
         }
-        if (socket.to(careTaker.socketId).emit('updateLocation', data)) {
-            console.log('location send from ' + patientId + ' to ' + careTaker._id);
+        if (socket.to(careTakerSocket).emit('updateLocation', data)) {
+            console.log('location send from ' + patientId + ' to ' + careTakerSocket);
         }
 
     } catch (error) {

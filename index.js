@@ -9,7 +9,6 @@ import assignTask from "./controller/socket/assignTask.js"
 import updateLocation from "./controller/socket/updateLocation.js"
 import { careTakers, patients } from "./serverMap.js"
 import Task from "./models/task.model.js"
-import { setTimeout } from "timers"
 
 dotenv.config()
 const app = express()
@@ -39,36 +38,26 @@ io.on('connection', async (socket) => {
     else if (role === 'patient') {
         patients.set(userId, socket.id);
         await Task.find({ to: userId }).then((tasks) => {
-            // wait for 3 seconds
-            setTimeout(() => {
-                tasks.forEach(async (task) => {
-
-                    // console.log(task);
-                    console.log("Task from mongo to patient " + userId);
-                    const data = {
-                        to: userId,
-                        from: task.from,
-                        task: {
-                            id: task.id,
-                            title: task.title,
-                            note: task.note,
-                            category: task.category,
-                            time: task.time,
-                            date: task.date,
-                            assignedBy: task.assignedBy,
-                            isCompleted: task.isCompleted,
-                        }
+            tasks.forEach(async (task) => {
+                console.log("Task from mongo to patient " + userId);
+                const data = {
+                    to: userId,
+                    from: task.from,
+                    task: {
+                        id: task.id,
+                        title: task.title,
+                        note: task.note,
+                        category: task.category,
+                        time: task.time,
+                        date: task.date,
+                        assignedBy: task.assignedBy,
+                        isCompleted: task.isCompleted,
                     }
-                    console.log(socket.id);
-                    socket.emit('tasksFromCareTaker', data)
-                    //await assignTask(data, socket);
-
-                    // socket.to(socket.id).emit('tasksFromCareTaker', task)
-                    // socket.emit('tasksFromCareTaker', task);
-                    // delete the task from mongo
-                    task.deleteOne();
-                })
-            }, 3000)
+                }
+                console.log(socket.id);
+                socket.emit('tasksFromCareTaker', data)
+                task.deleteOne();
+            })
 
 
 
@@ -112,10 +101,6 @@ io.on('connection', async (socket) => {
 
 
 app.use('/api', api)
-
-app.get('/', (req, res) => {
-    return res.status(200).send("Hi, " + process.env.NAME + " is here")
-})
 
 app.get('/health', (req, res) => {
     return res.status(200).send("Health OK")
