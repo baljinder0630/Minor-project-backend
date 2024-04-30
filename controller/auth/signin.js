@@ -12,7 +12,7 @@ const signin = async (req, res, next) => {
 
         }
 
-        if (role == 'patient') {
+        if (role.toLowerCase() == 'patient') {
 
             let patient = await patientModel.findOne({ email })
             if (!patient) {
@@ -49,7 +49,7 @@ const signin = async (req, res, next) => {
             res.status(200).json({ "success": true, "message": 'Signin Successful', accessToken, refreshToken, userId: patient._id });
 
         }
-        else if (role == 'careTaker') {
+        else if (role.toLowerCase() == 'caretaker') {
 
             let careTaker = await careTakerModel.findOne({ email })
             if (!careTaker) {

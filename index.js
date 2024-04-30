@@ -102,7 +102,6 @@ io.on('connection', async (socket) => {
 
 
 app.use('/api', api);
-app.use("/forgotpassword",forgotPassword);
 
 app.get('/health', (req, res) => {
     return res.status(200).send("Health OK")

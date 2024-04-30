@@ -11,7 +11,6 @@ const handleVerifyOtp = async (req,res) => {
   if(role.toLowerCase() == "patient"){
     try{
       const foundPatient = await patientModel.findById({_id:id});
-      console.log(foundPatient);
       if(foundPatient.otp == otp){
         foundPatient.otp = "";
         await foundPatient.save();
@@ -26,8 +25,7 @@ const handleVerifyOtp = async (req,res) => {
   }
   else if(role.toLowerCase() == "caretaker"){
     try{
-      const foundCareTaker = await careTakerModel.findById({_id:id});;
-      console.log(foundCareTaker);
+      const foundCareTaker = await careTakerModel.findById({_id:id});
       if(foundCareTaker.otp == otp){
         foundCareTaker.otp = "";
         await foundCareTaker.save();
