@@ -19,7 +19,7 @@ const signup = async (req, res, next) => {
 
         let hashedPassword = await bcrypt.hash(password, await bcrypt.genSalt(10));
 
-        if (role == 'patient') {
+        if (role.toLowerCase() == 'patient') {
 
             const duplicate = await patientModel.findOne({ email });
             if (duplicate) {
