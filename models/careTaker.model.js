@@ -26,7 +26,10 @@ const careTakerSchema = new mongoose.Schema({
     refreshToken: [String],
     assignedPatients: [{
         type: mongoose.Schema.Types.ObjectId,
-    }]
+    }],
+    otp:{
+        type:String
+    }
 }, { timestamps: true });
 
 

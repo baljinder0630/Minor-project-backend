@@ -29,6 +29,9 @@ const patientSchema = new mongoose.Schema({
     longitude: {
         type: String,
     },
+    otp:{
+        type:String
+    }
 }, { timestamps: true });
 
 

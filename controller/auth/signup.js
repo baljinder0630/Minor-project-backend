@@ -36,7 +36,7 @@ const signup = async (req, res, next) => {
 
             return res.status(200).json({ success: true, message: "Patient registered successfully", accessToken, refreshToken });
         }
-        else if (role == 'careTaker') {
+        else if (role.toLowerCase() == 'caretaker') {
 
             const duplicate = await careTakerModel.findOne({ email });
             if (duplicate) {

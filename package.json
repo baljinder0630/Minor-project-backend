@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,13 @@
     "cors": "^2.8.5",
     "crypto-random-string": "^5.0.0",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "express": "^4.19.2",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.3",
+    "nodemailer": "^6.9.13",
     "nodemon": "^3.0.1",
+    "otp-generator": "^4.0.1",
     "socket.io": "^4.7.2",
     "validator": "^13.11.0"
   }

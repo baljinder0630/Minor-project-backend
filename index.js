@@ -9,6 +9,7 @@ import assignTask from "./controller/socket/assignTask.js"
 import updateLocation from "./controller/socket/updateLocation.js"
 import { careTakers, patients } from "./serverMap.js"
 import Task from "./models/task.model.js"
+import forgotPassword from "./routes/forgotPassword.js"
 
 dotenv.config()
 const app = express()
@@ -100,7 +101,8 @@ io.on('connection', async (socket) => {
 });
 
 
-app.use('/api', api)
+app.use('/api', api);
+app.use("/forgotpassword",forgotPassword);
 
 app.get('/health', (req, res) => {
     return res.status(200).send("Health OK")
